@@ -1,5 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PydanticUserError, model_serializer
 
+try:
 
-class paramters(BaseModel):
-    query: str
+    class MyModel(BaseModel):
+        query: str
+
+        @model_serializer
+        @classmethod
+        def _serialize(self, x, y, z):
+            return self
+
+except PydanticUserError as exc_info:
+    assert exc_info.code == 'model-serializer-instance-method'
