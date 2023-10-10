@@ -10,6 +10,7 @@ from langchain.prompts import (
     MessagesPlaceholder,
 )
 from utils import *
+from parameter_send import paramters
 
 app = FastAPI()
 
@@ -53,8 +54,8 @@ class ArabicChatBot:
 chatbot = ArabicChatBot()
 
 @app.post("/get_response")
-async def get_response(query: str):
-    response = chatbot.run(query)
+async def get_response(input_parameters: paramters):
+    response = chatbot.run(paramters)
     print(response)
     return {"response": response}
 
