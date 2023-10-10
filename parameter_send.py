@@ -1,14 +1,9 @@
-from pydantic import BaseModel, PydanticUserError, model_serializer
+from pydantic import BaseModel, ValidationError, validator
 
-try:
+class MyModel(BaseModel):
+    query: str
 
-    class MyModel(BaseModel):
-        query: str
-
-        @model_serializer
-        @classmethod
-        def _serialize(self, x, y, z):
-            return self
-
-except PydanticUserError as exc_info:
-    assert exc_info.code == 'model-serializer-instance-method'
+    @validator("query", pre=True, always=True)
+    def validate_query(cls, value):
+        # Your validation logic here
+        return value
