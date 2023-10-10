@@ -8,7 +8,7 @@ try:
     class MyModel(BaseModel):
         query: str
         @validator("query", pre=True, always=True)
-        @model_validator
+        @model_validator(pre=False, skip_on_failure=True)
         @classmethod
         def _serialize(cls, x, y, z):
             return cls
